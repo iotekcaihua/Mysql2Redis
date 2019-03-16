@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caihua.mapper.UserMapper">
+
+    <select id="findAll" resultType="User">
+        select * from users
+    </select>
+
+
+
+    <select id="findUser" parameterType="int" resultMap="baseMap">
+        select * from users u,classes c where u.id=#{id} and u.c_id=c.c_id
+    </select>
+
+    <select id="findUsers" parameterType="java.lang.String" resultMap="baseMap">
+        select * from users u,classes c where u.name=#{name} and u.c_id=c.c_id
+    </select>
+
+    <delete id="delUser" parameterType="int">
+        delete from users where id=#{id}
+    </delete>
+
+    <update id="updateUser" parameterType="User">
+        update users set name=#{name},age=#{age},gender=#{gender},c_id=#{classes.cid} where id=#{id}
+    </update>
+
+    <insert id="addUser" parameterType="User">
+        insert into users (name,age,gender,c_id) value (#{name},#{age},#{gender},#{classes.cid})
+    </insert>
+
+    <resultMap id="baseMap" type="User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="gender" column="gender"/>
+        <association property="classes" javaType="Classes">
+            <id property="cid" column="c_id"/>
+            <result property="cname" column="c_name"/>
+        </association>
+    </resultMap>
+</mapper>

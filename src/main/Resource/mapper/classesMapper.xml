@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.caihua.mapper.ClassesMapper">
+
+    <select id="findAll" resultType="Classes">
+        select * from classes
+    </select>
+
+
+
+   <select id="findClasses" parameterType="java.lang.String" resultMap="baseMap">
+       select * from classes c,users u where c.c_name=#{cname} and c.c_id=u.c_id
+   </select>
+
+    <insert id="addClasses" parameterType="Classes">
+        insert into classes  (c_name) value (#{classes.cname})
+    </insert>
+
+    <delete id="delClasses" parameterType="java.lang.Integer">
+        delete from classes where c_id=#{cid}
+    </delete>
+
+    <update id="updateClasses" parameterType="Classes">
+        update classes set c_name=#{classes.cname} where c_id=#{classes.cid}
+    </update>
+
+    <resultMap id="baseMap" type="Classes">
+        <id property="cid" column="c_id"/>
+        <result property="cname" column="c_name"/>
+        <collection property="users" ofType="User">
+            <result property="name" column="name"/>
+            <result property="gender" column="gender"/>
+            <result property="age" column="age"/>
+        </collection>
+    </resultMap>
+
+</mapper>
