@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.UUID;
 
 @Controller
+@RequestMapping("user")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -28,6 +29,5 @@ public class UserController {
         userService.addUser();
         return JSON.toJSONString("添加成功");
     }
-
 
 }
